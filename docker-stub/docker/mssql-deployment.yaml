@@ -32,11 +32,6 @@ spec:
                 configMapKeyRef:
                   key: ACCEPT_EULA
                   name: mssql-env
-            - name: DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  key: DATABASE
-                  name: env-mssql-override-env
             - name: MSSQL_PID
               valueFrom:
                 configMapKeyRef:
