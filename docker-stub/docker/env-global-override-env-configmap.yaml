@@ -16,7 +16,7 @@ data:
   globalSettings__mail__smtp__ssl: "false"
   globalSettings__mail__smtp__username: REPLACE
   globalSettings__oidcIdentityClientKey: RANDOM_IDENTITY_KEY
-  globalSettings__sqlServer__connectionString: Data Source=tcp:mssql,1433;Initial Catalog=vault;Persist Security Info=False;User ID=sa;Password=RANDOM_DATABASE_PASSWORD;Multiple Active Result Sets=False;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True
+  globalSettings__sqlServer__connectionString: Data Source=tcp:mssql,1433;Initial Catalog=vault;Persist Security Info=False;User ID=sa;Password=RANDOM_DATABASE_PASSWORD;MultipleActiveResultSets=False;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True
   globalSettings__yubico__clientId: REPLACE
   globalSettings__yubico__key: REPLACE
 kind: ConfigMap
