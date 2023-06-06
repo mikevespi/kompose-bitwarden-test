@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: attachments
+  name: attachments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: attachments
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: attachments
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  key: ASPNETCORE_ENVIRONMENT
+                  name: global-env
+            - name: globalSettings__baseServiceUri__vault
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__baseServiceUri__vault
+                  name: global-env
+            - name: globalSettings__pushRelayBaseUri
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__pushRelayBaseUri
+                  name: global-env
+            - name: globalSettings__selfHosted
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__selfHosted
+                  name: global-env
+          image: bitwarden/attachments:latest
+          name: bitwarden-attachments
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/bitwarden/core/attachments
+              name: attachments-claim0
+      restartPolicy: Always
+      volumes:
+        - name: attachments-claim0
+          persistentVolumeClaim:
+            claimName: attachments-claim0
+status: {}

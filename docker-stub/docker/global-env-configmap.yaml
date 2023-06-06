@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  ASPNETCORE_ENVIRONMENT: Production
+  globalSettings__baseServiceUri__vault: http://localhost
+  globalSettings__pushRelayBaseUri: https://push.bitwarden.com
+  globalSettings__selfHosted: "true"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: admin-global-env
+  name: global-env

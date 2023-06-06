@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  ACCEPT_EULA: "Y"
+  MSSQL_PID: Express
+  SA_PASSWORD: SECRET
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mssql-mssql-env
+  name: mssql-env

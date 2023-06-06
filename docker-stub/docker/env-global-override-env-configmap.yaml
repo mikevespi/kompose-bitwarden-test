@@ -1,0 +1,27 @@
+apiVersion: v1
+data:
+  adminSettings__admins: ""
+  globalSettings__baseServiceUri__vault: https://bitwarden.example.com
+  globalSettings__disableUserRegistration: "false"
+  globalSettings__duo__aKey: RANDOM_DUO_AKEY
+  globalSettings__hibpApiKey: REPLACE
+  globalSettings__identityServer__certificatePassword: IDENTITY_CERT_PASSWORD
+  globalSettings__installation__id: 00000000-0000-0000-0000-000000000000
+  globalSettings__installation__key: SECRET_INSTALLATION_KEY
+  globalSettings__internalIdentityKey: RANDOM_IDENTITY_KEY
+  globalSettings__mail__replyToEmail: no-reply@bitwarden.example.com
+  globalSettings__mail__smtp__host: REPLACE
+  globalSettings__mail__smtp__password: REPLACE
+  globalSettings__mail__smtp__port: "587"
+  globalSettings__mail__smtp__ssl: "false"
+  globalSettings__mail__smtp__username: REPLACE
+  globalSettings__oidcIdentityClientKey: RANDOM_IDENTITY_KEY
+  globalSettings__sqlServer__connectionString: Data Source=tcp:mssql,1433;Initial Catalog=vault;Persist Security Info=False;User ID=sa;Password=RANDOM_DATABASE_PASSWORD;Multiple Active Result Sets=False;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True
+  globalSettings__yubico__clientId: REPLACE
+  globalSettings__yubico__key: REPLACE
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: admin-env-global-override-env
+  name: env-global-override-env
