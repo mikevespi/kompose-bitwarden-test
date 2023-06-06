@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  DATABASE: vault
+  SA_PASSWORD: RANDOM_DATABASE_PASSWORD
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mssql-env-mssql-override-env
+  name: env-mssql-override-env

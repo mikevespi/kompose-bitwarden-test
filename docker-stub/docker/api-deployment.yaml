@@ -1,0 +1,167 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: api
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.network/docker-public: "true"
+        io.kompose.service: api
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  key: ASPNETCORE_ENVIRONMENT
+                  name: global-env
+            - name: adminSettings__admins
+              valueFrom:
+                configMapKeyRef:
+                  key: adminSettings__admins
+                  name: env-global-override-env
+            - name: globalSettings__baseServiceUri__vault
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__baseServiceUri__vault
+                  name: global-env
+            - name: globalSettings__baseServiceUri__vault
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__baseServiceUri__vault
+                  name: env-global-override-env
+            - name: globalSettings__disableUserRegistration
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__disableUserRegistration
+                  name: env-global-override-env
+            - name: globalSettings__duo__aKey
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__duo__aKey
+                  name: env-global-override-env
+            - name: globalSettings__hibpApiKey
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__hibpApiKey
+                  name: env-global-override-env
+            - name: globalSettings__identityServer__certificatePassword
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__identityServer__certificatePassword
+                  name: env-global-override-env
+            - name: globalSettings__installation__id
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__installation__id
+                  name: env-global-override-env
+            - name: globalSettings__installation__key
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__installation__key
+                  name: env-global-override-env
+            - name: globalSettings__internalIdentityKey
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__internalIdentityKey
+                  name: env-global-override-env
+            - name: globalSettings__mail__replyToEmail
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__replyToEmail
+                  name: env-global-override-env
+            - name: globalSettings__mail__smtp__host
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__smtp__host
+                  name: env-global-override-env
+            - name: globalSettings__mail__smtp__password
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__smtp__password
+                  name: env-global-override-env
+            - name: globalSettings__mail__smtp__port
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__smtp__port
+                  name: env-global-override-env
+            - name: globalSettings__mail__smtp__ssl
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__smtp__ssl
+                  name: env-global-override-env
+            - name: globalSettings__mail__smtp__username
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__mail__smtp__username
+                  name: env-global-override-env
+            - name: globalSettings__oidcIdentityClientKey
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__oidcIdentityClientKey
+                  name: env-global-override-env
+            - name: globalSettings__pushRelayBaseUri
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__pushRelayBaseUri
+                  name: global-env
+            - name: globalSettings__selfHosted
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__selfHosted
+                  name: global-env
+            - name: globalSettings__sqlServer__connectionString
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__sqlServer__connectionString
+                  name: env-global-override-env
+            - name: globalSettings__yubico__clientId
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__yubico__clientId
+                  name: env-global-override-env
+            - name: globalSettings__yubico__key
+              valueFrom:
+                configMapKeyRef:
+                  key: globalSettings__yubico__key
+                  name: env-global-override-env
+          image: bitwarden/api:latest
+          name: bitwarden-api
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/bitwarden/core
+              name: api-claim0
+            - mountPath: /etc/bitwarden/ca-certificates
+              name: api-claim1
+            - mountPath: /etc/bitwarden/logs
+              name: api-claim2
+      restartPolicy: Always
+      volumes:
+        - name: api-claim0
+          persistentVolumeClaim:
+            claimName: api-claim0
+        - name: api-claim1
+          persistentVolumeClaim:
+            claimName: api-claim1
+        - name: api-claim2
+          persistentVolumeClaim:
+            claimName: api-claim2
+status: {}

@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mssql
+  name: mssql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mssql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/docker-default: "true"
+        io.kompose.service: mssql
+    spec:
+      containers:
+        - env:
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  key: ACCEPT_EULA
+                  name: mssql-env
+            - name: DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DATABASE
+                  name: env-mssql-override-env
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  key: MSSQL_PID
+                  name: mssql-env
+            - name: SA_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: SA_PASSWORD
+                  name: mssql-env
+            - name: SA_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: SA_PASSWORD
+                  name: env-mssql-override-env
+          image: bitwarden/mssql:latest
+          name: bitwarden-mssql
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/opt/mssql/data
+              name: mssql-claim0
+            - mountPath: /var/opt/mssql/log
+              name: mssql-claim1
+            - mountPath: /etc/bitwarden/mssql/backups
+              name: mssql-claim2
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: mssql-claim0
+          persistentVolumeClaim:
+            claimName: mssql-claim0
+        - name: mssql-claim1
+          persistentVolumeClaim:
+            claimName: mssql-claim1
+        - name: mssql-claim2
+          persistentVolumeClaim:
+            claimName: mssql-claim2
+status: {}
